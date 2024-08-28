@@ -1,0 +1,44 @@
+/*=====================================================================================================================================*/
+[------1.0.0_24w34g------]
+2024/8/25:GPT-SoVITSv1使用现有模型成功部署：爱丽丝,桃。
+[------1.1.0_24w34g------]
+2024/8/25:GPT-SoVITSv2使用现有模型成功部署：爱丽丝,桃.仅限满足普通语音生成,不够有感情。
+[------1.1.5_24w34g------]
+2024/8/26:GPT-SoVITSv2使用网站上的模型成功：音质更好，更有感情，更像人话。用BA的wink网站上找比较平和的语音来训练会减少气音。
+[------1.2.0_24w35a------]
+2024/8/26:
+两种模型的导入：GPT-SoVITSv2使用本地ip实现api调用成功，基本语音合成功能完成。
+2024/8/27:
+//***==========================使用指令=====================================***//
+SoVITS,GPT模型配置指令:
+http://127.0.0.1:9880/set_sovits_weights?weights_path=E:\GPT-SoVITS-v2-240821\SoVITS_weights_v2\als_e10_s270.pth
+http://127.0.0.1:9880/set_gpt_weights?weights_path=E:\GPT-SoVITS-v2-240821\GPT_weights_v2\als-e10.ckpt
+语音合成指令:
+http://127.0.0.1:9880/tts?text=你好，我是爱丽丝。有什么可以帮助你吗。&text_lang=zh&ref_audio_path=D:\projectAB\als\example\11.wav&prompt_lang=ja&prompt_text=勇者よ。光があなたと共にあらんことを。&speed_factor=1&text_split_method=cut5&batch_size=1&media_type=wav&streaming_mode=true
+http://127.0.0.1:9880/tts?text=【你要合成的语句】&text_lang=【你要合成的语句的语言：中文zh,日语ja】&ref_audio_path=【参考音频的文件地址】&prompt_lang=【参考音频的语言】&prompt_text=【参考音频的文本】&speed_factor=【语音速度】&text_split_method=cut5&batch_size=1&media_type=wav&streaming_mode=true
+
+json
+{
+    "text": "",                   # str.(required) text to be synthesized（需要合成语音的文本）
+    "text_lang: "",               # str.(required) language of the text to be synthesized（需要合成语音的语言:zh中文,ja日文）
+    "ref_audio_path": "",         # str.(required) reference audio path(主参考语音的文件路径位置)
+    "aux_ref_audio_paths": [],    # list.(optional) auxiliary reference audio paths for multi-speaker synthesis（辅助参考语音的文件路径位置：不限一个）
+    "prompt_text": "",            # str.(optional) prompt text for the reference audio（主参考语音的文本）
+    "prompt_lang": "",            # str.(required) language of the prompt text for the reference audio（参考语音的语言:zh中文,ja日文）
+    "top_k": 5,                   # int. top k sampling
+    "top_p": 1,                   # float. top p sampling
+    "temperature": 1,             # float. temperature for sampling（三个模型训练值，不改目前感觉区别不大）
+    "text_split_method": "cut0",  # str. text split method, see text_segmentation_method.py for details.
+    "batch_size": 1,              # int. batch size for inference（批量大小）
+    "batch_threshold": 0.75,      # float. threshold for batch splitting.
+    "split_bucket: True,          # bool. whether to split the batch into multiple buckets.
+    "return_fragment": False,     # bool. step by step return the audio fragment.
+    "speed_factor":1.0,           # float. control the speed of the synthesized audio.（语音速度）
+    "streaming_mode": False,      # bool. whether to return a streaming response.
+    "seed": -1,                   # int. random seed for reproducibility.
+    "parallel_infer": True,       # bool. whether to use parallel inference.
+    "repetition_penalty": 1.35    # float. repetition penalty for T2S model.
+}
+//***===================================================================***//
+Error:重新打开项目说模型不行。way:把上次配置的模型删了如何启动程序，成功启动后再导入再进行指令配置。
+/*=====================================================================================================================================*/
